@@ -27,7 +27,7 @@ public class ExperienceController {
     @PostMapping()
     public ResponseEntity<ExperienceDTO> addExperience(@RequestBody @Validated ExperienceDTO experienceDTO) {
         return ResponseEntity.ok(this.experienceMapper.toExperienceDTO(this.experienceService
-                .editExperience(this.experienceMapper.toExperienceEntity(experienceDTO))));
+                .addExperience(this.experienceMapper.toExperienceEntity(experienceDTO))));
     }
 
     @PutMapping()

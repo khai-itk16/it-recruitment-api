@@ -4,10 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
 
 @Entity
 @NoArgsConstructor
@@ -22,11 +22,11 @@ public class ExperienceEntity implements Serializable {
 
     private String experienceName;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date startTime;
+    @Length(max = 20)
+    private String startTime;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date endTime;
+    @Length(max = 20)
+    private String endTime;
 
     @Column(columnDefinition = "TEXT")
     private String description;

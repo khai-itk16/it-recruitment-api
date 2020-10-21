@@ -19,7 +19,7 @@ public class SkillEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer skillId;
 
-    private String SkillName;
+    private String skillName;
 
     @Column(columnDefinition = "TEXT")
     private String description;

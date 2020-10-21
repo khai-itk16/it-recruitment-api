@@ -26,11 +26,6 @@ public class ExperienceServiceImpl implements ExperienceService {
 
     @Override
     public ExperienceEntity addExperience(ExperienceEntity experienceEntity) {
-        Optional<ExperienceEntity> optionalExperienceEntity =
-                this.experienceRepository.findById(experienceEntity.getExperienceId());
-        if (!optionalExperienceEntity.isPresent()) {
-            throw new ExperienceIsExistException(experienceEntity.getExperienceId());
-        }
         return this.experienceRepository.save(experienceEntity);
     }
 

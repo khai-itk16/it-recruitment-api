@@ -26,12 +26,16 @@ public class SkillController {
 
     @PostMapping()
     public ResponseEntity<SkillDTO> addSkill(@RequestBody @Validated SkillDTO skillDTO) {
+        System.out.println(skillDTO);
+        System.out.println(this.skillMapper.toSkillEntity(skillDTO));
         return ResponseEntity.ok(this.skillMapper.toSkillDTO(this.skillService
-                .editSkill(this.skillMapper.toSkillEntity(skillDTO))));
+                .addSkill(this.skillMapper.toSkillEntity(skillDTO))));
     }
 
     @PutMapping()
     public ResponseEntity<SkillDTO> editSkill(@RequestBody @Validated SkillDTO skillDTO) {
+        System.out.println(skillDTO);
+        System.out.println(this.skillMapper.toSkillEntity(skillDTO));
         return ResponseEntity.ok(this.skillMapper.toSkillDTO(this.skillService
                 .editSkill(this.skillMapper.toSkillEntity(skillDTO))));
     }

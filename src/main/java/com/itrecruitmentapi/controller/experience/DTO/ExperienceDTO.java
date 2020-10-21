@@ -5,10 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import java.util.Date;
+import org.hibernate.validator.constraints.Length;
 
 @Data
 @AllArgsConstructor
@@ -19,11 +16,11 @@ public class ExperienceDTO {
 
     private String experienceName;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date startTime;
+    @Length(max = 20)
+    private String startTime;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date endTime;
+    @Length(max = 20)
+    private String endTime;
 
     private String description;
 

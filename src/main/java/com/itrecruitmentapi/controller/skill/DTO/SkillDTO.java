@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class SkillDTO {
     private Integer skillId;
 
-    private String SkillName;
+    private String skillName;
 
     private String description;
 

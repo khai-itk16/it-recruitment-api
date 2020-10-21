@@ -24,11 +24,6 @@ public class EducationServiceImpl implements EducationService {
 
     @Override
     public EducationEntity addEducation(EducationEntity educationEntity) {
-        Optional<EducationEntity> optionalEducationEntity =
-                this.educationRepository.findById(educationEntity.getEducationId());
-        if(optionalEducationEntity.isPresent()) {
-            throw new EducationIsExistException(educationEntity.getEducationId());
-        }
         return this.educationRepository.save(educationEntity);
     }
 

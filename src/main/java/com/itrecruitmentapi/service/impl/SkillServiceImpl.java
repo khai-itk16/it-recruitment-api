@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -26,11 +25,6 @@ public class SkillServiceImpl implements SkillService {
 
     @Override
     public SkillEntity addSkill(SkillEntity skillEntity) {
-        Optional<SkillEntity> optionalSkillEntity =
-                this.skillRepository.findById(skillEntity.getSkillId());
-        if (!optionalSkillEntity.isPresent()) {
-            throw new SkillIsExistException(skillEntity.getSkillId());
-        }
         return this.skillRepository.save(skillEntity);
     }
 
