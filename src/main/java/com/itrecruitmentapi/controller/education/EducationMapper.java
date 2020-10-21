@@ -12,7 +12,6 @@ import java.util.List;
 public interface EducationMapper {
     @Mapping(source = "educationDTO.candidateDTO", target = "candidateResumeEntity")
     EducationEntity toEducationEntity (EducationDTO educationDTO);
-
     EducationDTO toEducationDTO (EducationEntity educationEntity);
     List<EducationDTO> toEducationDTOs(List<EducationEntity> educationEntities);
 }

@@ -1,0 +1,16 @@
+package com.itrecruitmentapi.controller.job_position.DTO;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class JobPositionDTO {
+    private Integer jobPositionId;
+
+    private String jobPositionName;
+}

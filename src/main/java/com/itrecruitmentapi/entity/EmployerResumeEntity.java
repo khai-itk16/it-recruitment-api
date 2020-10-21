@@ -17,10 +17,13 @@ import java.util.Collection;
 @Data
 @Table(name = "employer_resume")
 public class EmployerResumeEntity implements Serializable {
+    public EmployerResumeEntity(int accountId) {
+        this.accountId = accountId;
+    }
+
     @Id
     private Integer accountId;
 
-    @MapsId
     @OneToOne()
     @JoinColumn(name = "account_id")
     private AccountEntity accountEntity;

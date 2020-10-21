@@ -19,7 +19,8 @@ public class CandidateResumeServiceImpl implements CandidateResumeService {
     public final AccountRepository accountRepository;
 
     @Override
-    public CandidateResumeEntity addCandidateInfor(CandidateResumeEntity candidateResumeEntity) {
+    public CandidateResumeEntity updateCandidateInfor(CandidateResumeEntity candidateResumeEntity) {
+        System.out.println(candidateResumeEntity);
         int id = candidateResumeEntity.getAccountEntity().getAccountId();
         AccountEntity accountEntity = this.accountRepository.findById(id).orElseThrow(() ->
                 new AccountIsNotExistsException(id));
@@ -35,6 +36,15 @@ public class CandidateResumeServiceImpl implements CandidateResumeService {
             throw new AccountIsNotExistsException(id);
         }
         return optionalCandidateResumeEntity.get();
+    }
+
+    @Override
+    public CandidateResumeEntity updateCandidateResume(CandidateResumeEntity candidateResumeEntity) {
+        int id = candidateResumeEntity.getAccountEntity().getAccountId();
+        if(!this.accountRepository.existsById(id)) {
+            throw new AccountIsNotExistsException(id);
+        }
+        return this.candidateResumeRepository.save(candidateResumeEntity);
     }
 }
 

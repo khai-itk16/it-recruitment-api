@@ -21,14 +21,18 @@ public class CandidateResumeController {
         return ResponseEntity.ok(this.candidateMapper.toCandidateDTO(this.candidateResumeService.getCandidateById(id)));
     }
 
-    @PostMapping("/self-infor")
-    public ResponseEntity<CandidateDTO> addCandidateInfor(@RequestBody @Validated CandidateDTO candidateDTO) {
-        System.out.println("========add new self infor candidate======");
+    @PutMapping("/self-infor")
+    public ResponseEntity<CandidateDTO> updateCandidateInfor(@RequestBody @Validated CandidateDTO candidateDTO) {
         System.out.println(candidateDTO);
-        System.out.println("========candidate resume entity======");
-        System.out.println(this.candidateMapper.toCandidateResumeEntity(candidateDTO));
-        return ResponseEntity.status(HttpStatus.CREATED).body(
-                this.candidateMapper.toCandidateDTO(this.candidateResumeService.addCandidateInfor(
+        return ResponseEntity.status(HttpStatus.OK).body(
+                this.candidateMapper.toCandidateDTO(this.candidateResumeService.updateCandidateInfor(
+                        this.candidateMapper.toCandidateResumeEntity(candidateDTO))));
+    }
+
+    @PutMapping("/candidate-resume")
+    public ResponseEntity<CandidateDTO> updateCandidateResume(@RequestBody @Validated CandidateDTO candidateDTO) {
+        return ResponseEntity.status(HttpStatus.OK).body(
+                this.candidateMapper.toCandidateDTO(this.candidateResumeService.updateCandidateResume(
                         this.candidateMapper.toCandidateResumeEntity(candidateDTO))));
     }
 }

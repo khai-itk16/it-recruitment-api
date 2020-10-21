@@ -26,7 +26,7 @@ public class EducationEntity implements Serializable {
 
     private boolean isDegree;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date degreeTime;
 
     @Column(columnDefinition = "TEXT")

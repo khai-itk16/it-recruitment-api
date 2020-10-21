@@ -26,7 +26,9 @@ public class CandidateDTO {
     @Length(max = 50, message = "Name's candidate has max 50 character.")
     private String candidateName;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    private boolean sex;
+
+    @Temporal(TemporalType.DATE)
     private Date birthday;
 
     @Length(max = 11, message = "Phone must have less than or equal 11 character")

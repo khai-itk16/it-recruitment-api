@@ -24,7 +24,7 @@ public class EducationDTO {
 
     private boolean isDegree;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date degreeTime;
 
     private String description;

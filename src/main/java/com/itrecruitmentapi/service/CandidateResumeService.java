@@ -3,6 +3,7 @@ package com.itrecruitmentapi.service;
 import com.itrecruitmentapi.entity.CandidateResumeEntity;
 
 public interface CandidateResumeService {
-    CandidateResumeEntity addCandidateInfor(CandidateResumeEntity candidateResumeEntity);
+    CandidateResumeEntity updateCandidateInfor(CandidateResumeEntity candidateResumeEntity);
     CandidateResumeEntity getCandidateById(int id);
+    CandidateResumeEntity updateCandidateResume(CandidateResumeEntity candidateResumeEntity);
 }

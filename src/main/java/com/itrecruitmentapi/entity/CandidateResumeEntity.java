@@ -18,10 +18,14 @@ import java.util.Date;
 @Entity
 @Table(name = "candidate_resume")
 public class CandidateResumeEntity implements Serializable {
+
+    public CandidateResumeEntity(int accountId) {
+        this.accountId = accountId;
+    }
+
     @Id
     private Integer accountId;
 
-    @MapsId
     @OneToOne()
     @JoinColumn(name = "account_id")
     private AccountEntity accountEntity;
@@ -29,11 +33,13 @@ public class CandidateResumeEntity implements Serializable {
     @Length(max = 50, message = "Name's candidate has max 50 character.")
     private String candidateName;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date birthday;
 
     @Length(max = 11, message = "Phone must have less than or equal 11 character")
     private String phone;
+
+    private boolean sex;
 
     private int salaryExpect;
 

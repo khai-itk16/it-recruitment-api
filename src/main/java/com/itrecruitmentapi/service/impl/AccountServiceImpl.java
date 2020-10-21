@@ -4,8 +4,13 @@ import com.itrecruitmentapi.controller.account.exception.AccountIsExistsExceptio
 import com.itrecruitmentapi.controller.account.exception.AccountIsNotExistsException;
 import com.itrecruitmentapi.controller.account.exception.AccountNotFoundException;
 import com.itrecruitmentapi.entity.AccountEntity;
+import com.itrecruitmentapi.entity.CandidateResumeEntity;
+import com.itrecruitmentapi.entity.EmployerResumeEntity;
 import com.itrecruitmentapi.repository.AccountRepository;
+import com.itrecruitmentapi.repository.CandidateResumeRepository;
+import com.itrecruitmentapi.repository.EmployerResumeRepository;
 import com.itrecruitmentapi.service.AccountService;
+import com.itrecruitmentapi.service.CandidateResumeService;
 import com.itrecruitmentapi.shared.enums.Status;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,6 +24,8 @@ import java.util.Optional;
 public class AccountServiceImpl implements AccountService {
 
     private final AccountRepository accountRepository;
+    private final CandidateResumeRepository candidateResumeRepository;
+    private final EmployerResumeRepository employerResumeRepository;
 
     @Override
     public List<AccountEntity> getAllAccounts() {
@@ -41,7 +48,19 @@ public class AccountServiceImpl implements AccountService {
         }
 
         accountEntity.setPassword(new BCryptPasswordEncoder().encode(accountEntity.getPassword()));
-        return this.accountRepository.save(accountEntity);
+        AccountEntity accountEntityDB = this.accountRepository.save(accountEntity);
+        System.out.println(accountEntity.getRoleEntities().size());
+        System.out.println(accountEntity.getRoleEntities().stream().findFirst().get().getRoleName().equals("ROLE_CANDIDATE"));
+        if(accountEntity.getRoleEntities().size() == 1
+                && accountEntity.getRoleEntities().stream().findFirst().get().getRoleName().equals("ROLE_CANDIDATE")) {
+            this.candidateResumeRepository.save(new CandidateResumeEntity(accountEntityDB.getAccountId()));
+        }
+
+        if(accountEntity.getRoleEntities().size() == 1
+                && accountEntity.getRoleEntities().stream().findFirst().get().getRoleName().equals("ROLE_EMPLOYER")) {
+            this.employerResumeRepository.save(new EmployerResumeEntity(accountEntityDB.getAccountId()));
+        }
+        return accountEntityDB;
     }
 
     @Override
