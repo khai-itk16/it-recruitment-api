@@ -1,6 +1,5 @@
 package com.itrecruitmentapi.service.impl;
 
-import com.itrecruitmentapi.controller.skill.exception.SkillIsExistException;
 import com.itrecruitmentapi.controller.skill.exception.SkillIsNotExistException;
 import com.itrecruitmentapi.entity.SkillEntity;
 import com.itrecruitmentapi.repository.SkillRepository;
@@ -14,8 +13,8 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class SkillServiceImpl implements SkillService {
-    public final SkillRepository skillRepository;
-    public final AccountService accountService;
+    private final SkillRepository skillRepository;
+    private final AccountService accountService;
 
     @Override
     public List<SkillEntity> getSkillByAccountId(int accountId) {

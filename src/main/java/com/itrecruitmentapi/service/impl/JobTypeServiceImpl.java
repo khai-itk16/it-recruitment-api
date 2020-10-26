@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class JobTypeServiceImpl implements JobTypeService {
-    public final JobTypeRepository jobTypeRepository;
+    private final JobTypeRepository jobTypeRepository;
 
 
     @Override

@@ -15,12 +15,11 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CandidateResumeServiceImpl implements CandidateResumeService {
 
-    public final CandidateResumeRepository candidateResumeRepository;
-    public final AccountRepository accountRepository;
+    private final CandidateResumeRepository candidateResumeRepository;
+    private final AccountRepository accountRepository;
 
     @Override
     public CandidateResumeEntity updateCandidateInfor(CandidateResumeEntity candidateResumeEntity) {
-        System.out.println(candidateResumeEntity);
         int id = candidateResumeEntity.getAccountEntity().getAccountId();
         AccountEntity accountEntity = this.accountRepository.findById(id).orElseThrow(() ->
                 new AccountIsNotExistsException(id));
@@ -40,8 +39,8 @@ public class CandidateResumeServiceImpl implements CandidateResumeService {
 
     @Override
     public CandidateResumeEntity updateCandidateResume(CandidateResumeEntity candidateResumeEntity) {
-        int id = candidateResumeEntity.getAccountEntity().getAccountId();
-        if(!this.accountRepository.existsById(id)) {
+        int id = candidateResumeEntity.getAccountId();
+        if(!this.candidateResumeRepository.existsById(id)) {
             throw new AccountIsNotExistsException(id);
         }
         return this.candidateResumeRepository.save(candidateResumeEntity);

@@ -1,9 +1,11 @@
 package com.itrecruitmentapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -18,6 +20,9 @@ public class ImageEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer imageId;
+
+    @Length(max = 50)
+    private String imageName;
 
     private boolean isAvatar;
 

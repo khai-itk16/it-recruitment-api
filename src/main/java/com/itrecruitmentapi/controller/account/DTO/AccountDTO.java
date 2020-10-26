@@ -1,6 +1,8 @@
 package com.itrecruitmentapi.controller.account.DTO;
 
+import com.itrecruitmentapi.controller.image.DTO.ImageDTO;
 import com.itrecruitmentapi.entity.AddressEntity;
+import com.itrecruitmentapi.entity.ImageEntity;
 import com.itrecruitmentapi.entity.RoleEntity;
 import com.itrecruitmentapi.shared.enums.Status;
 import lombok.AllArgsConstructor;
@@ -13,6 +15,7 @@ import javax.persistence.Enumerated;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.util.Collection;
 import java.util.Set;
 
 @Data
@@ -37,4 +40,5 @@ public class AccountDTO {
 
     private AddressEntity addressEntity;
 
+    private Collection<ImageDTO> imageDTOs;
 }

@@ -12,7 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JobPositionServiceImpl implements JobPositionService {
 
-    public final JobPositionRepository jobPositionRepository;
+    private final JobPositionRepository jobPositionRepository;
 
     @Override
     public List<JobPositionEntity> getAllJobPositions() {

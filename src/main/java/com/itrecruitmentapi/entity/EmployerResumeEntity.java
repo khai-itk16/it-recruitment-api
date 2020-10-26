@@ -43,6 +43,6 @@ public class EmployerResumeEntity implements Serializable {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @OneToMany(mappedBy = "employerResumeEntity", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "employerResumeEntity")
     private Collection<JobPostEntity> jobPostEntities;
 }

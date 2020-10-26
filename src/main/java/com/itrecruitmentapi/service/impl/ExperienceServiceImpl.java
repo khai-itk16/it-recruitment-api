@@ -1,6 +1,5 @@
 package com.itrecruitmentapi.service.impl;
 
-import com.itrecruitmentapi.controller.experience.exception.ExperienceIsExistException;
 import com.itrecruitmentapi.controller.experience.exception.ExperienceIsNotExistException;
 import com.itrecruitmentapi.entity.ExperienceEntity;
 import com.itrecruitmentapi.repository.ExperienceRepository;
@@ -10,13 +9,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class ExperienceServiceImpl implements ExperienceService {
-    public final ExperienceRepository experienceRepository;
-    public final AccountService accountService;
+    private final ExperienceRepository experienceRepository;
+    private final AccountService accountService;
 
     @Override
     public List<ExperienceEntity> getExperiencesByAccountId(int accountId) {

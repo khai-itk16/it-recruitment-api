@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/candidate")
 public class CandidateResumeController {
 
-    public final CandidateMapper candidateMapper;
-    public final CandidateResumeService candidateResumeService;
+    private final CandidateMapper candidateMapper;
+    private final CandidateResumeService candidateResumeService;
 
     @GetMapping("/{id}")
     public ResponseEntity<CandidateDTO> getAccountById(@PathVariable("id") int id) {

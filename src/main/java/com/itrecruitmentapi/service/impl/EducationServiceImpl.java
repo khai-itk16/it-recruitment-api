@@ -1,6 +1,5 @@
 package com.itrecruitmentapi.service.impl;
 
-import com.itrecruitmentapi.controller.education.exception.EducationIsExistException;
 import com.itrecruitmentapi.controller.education.exception.EducationIsNotExistException;
 import com.itrecruitmentapi.entity.EducationEntity;
 import com.itrecruitmentapi.repository.EducationRepository;
@@ -9,12 +8,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class EducationServiceImpl implements EducationService {
-    public final EducationRepository educationRepository;
+    private final EducationRepository educationRepository;
 
 
     @Override
