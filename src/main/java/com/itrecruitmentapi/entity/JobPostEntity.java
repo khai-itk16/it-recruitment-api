@@ -4,10 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Date;
 
 @Data
 @Builder
@@ -20,12 +22,22 @@ public class JobPostEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer jobPostId;
 
-    private int numYearExprience;
+    private int numYearExperience;
 
     private String jobTitle;
 
     @Column(columnDefinition = "TEXT")
-    private String description;
+    private String jobDescription;
+
+    @Column(columnDefinition = "TEXT")
+    private String jobRequire;
+
+    @Temporal(TemporalType.DATE)
+    @CreationTimestamp
+    private Date createPostTime;
+    
+    @Temporal(TemporalType.DATE)
+    private Date expirePostTime;
 
     @OneToOne()
     @JoinColumn(name = "job_type_id")
