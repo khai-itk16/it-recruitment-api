@@ -9,23 +9,45 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/job-post")
+@RequestMapping("/api")
 public class JobPostController {
     private final JobPostMapper jobPostMapper;
     private final JobPostService jobPostService;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<JobPostDTO> getJobPostById(@PathVariable("id") int id) {
+    @GetMapping("/admin/job-post")
+    public ResponseEntity<List<JobPostDTO>> getAllJobPostByStatus(@RequestParam(name = "statusJobPostId") int statusJobPostId) {
         return ResponseEntity.status(HttpStatus.OK).body(
-                this.jobPostMapper.toJobPostDTO(
-                        this.jobPostService.getJobPostById(id)
-                )
+            this.jobPostMapper.toJobPostDTOs(
+                this.jobPostService.getAllJobPostByStatusJobPostId(statusJobPostId)
+            )
         );
     }
 
-    @PostMapping()
+    @GetMapping("/job-post")
+    public ResponseEntity<List<JobPostDTO>> getAllJobPostByEmployerAndStatus(
+            @RequestParam(name = "accountId") int accountId,
+            @RequestParam(name = "statusJobPostId") int statusJobPostId) {
+        return ResponseEntity.status(HttpStatus.OK).body(
+            this.jobPostMapper.toJobPostDTOs(
+                this.jobPostService.getAllJobPostByEmployerIdAndStatusJobPostId(accountId, statusJobPostId)
+            )
+        );
+    }
+
+    @GetMapping("/job-post/{id}")
+    public ResponseEntity<JobPostDTO> getJobPostById(@PathVariable("id") int id) {
+        return ResponseEntity.status(HttpStatus.OK).body(
+            this.jobPostMapper.toJobPostDTO(
+                this.jobPostService.getJobPostById(id)
+            )
+        );
+    }
+
+    @PostMapping("/job-post")
     public ResponseEntity<JobPostDTO> addJobPost(@RequestBody @Validated JobPostDTO jobPostDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(
             this.jobPostMapper.toJobPostDTO(
@@ -34,16 +56,16 @@ public class JobPostController {
         );
     }
 
-    @PutMapping()
+    @PutMapping("/job-post")
     public ResponseEntity<JobPostDTO> editJobPost(@RequestBody @Validated JobPostDTO jobPostDTO) {
         return ResponseEntity.status(HttpStatus.OK).body(
-                this.jobPostMapper.toJobPostDTO(
-                        this.jobPostService.editJobPost(this.jobPostMapper.toJobPostEntity(jobPostDTO))
-                )
+            this.jobPostMapper.toJobPostDTO(
+                this.jobPostService.editJobPost(this.jobPostMapper.toJobPostEntity(jobPostDTO))
+            )
         );
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/job-post/{id}")
     public ResponseEntity<ResponseMessage> deleteJobPost(@PathVariable("id") int id) {
         this.jobPostService.deleteJobPostById(id);
         return ResponseEntity.ok(new ResponseMessage("delete success job post with id: " + id));

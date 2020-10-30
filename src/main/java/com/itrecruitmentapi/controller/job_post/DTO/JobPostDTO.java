@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -18,6 +19,9 @@ import java.util.Date;
 @Builder
 public class JobPostDTO {
     private Integer jobPostId;
+
+    @Length(max = 20, message = "Mã code có độ dài tối đa 20 ký tự")
+    private String jobCode;
 
     private int numYearExperience;
 

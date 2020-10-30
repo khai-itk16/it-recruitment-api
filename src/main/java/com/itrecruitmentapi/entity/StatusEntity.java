@@ -22,4 +22,8 @@ public class StatusEntity implements Serializable {
 
     @Length(max = 20)
     private String statusName;
+
+    public StatusEntity(int statusId) {
+        this.statusId = statusId;
+    }
 }

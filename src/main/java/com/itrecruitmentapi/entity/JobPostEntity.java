@@ -1,10 +1,12 @@
 package com.itrecruitmentapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -21,6 +23,9 @@ public class JobPostEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer jobPostId;
+
+    @Length(max = 20)
+    private String jobCode;
 
     private int numYearExperience;
 
@@ -51,13 +56,13 @@ public class JobPostEntity implements Serializable {
     @JoinColumn(name = "status_id")
     private StatusEntity statusEntity;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id")
     private EmployerResumeEntity employerResumeEntity;
 
-    @OneToMany(mappedBy = "jobPostEntity", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "jobPostEntity")
     private Collection<JobSaveEntity> jobSaveEntities;
 
-    @OneToMany(mappedBy = "jobPostEntity", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "jobPostEntity")
     private Collection<JobApplyEntity> jobApplyEntities;
 }
