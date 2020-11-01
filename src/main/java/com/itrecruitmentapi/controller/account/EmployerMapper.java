@@ -14,7 +14,6 @@ public interface EmployerMapper {
     EmployerResumeEntity toEmployerResumeEntity(EmployerResumeDTO employerResumeDTO);
 
     @Mapping(source = "employerResumeEntity.accountEntity", target = "accountDTO")
-    @Mapping(source = "employerResumeEntity.jobPostEntities", target = "jobPostDTOs")
     EmployerResumeDTO toEmployerResumeDTO(EmployerResumeEntity employerResumeEntity);
     List<EmployerResumeDTO> toEmployerResumeDTOs(List<EmployerResumeEntity> candidateResumeEntity);
 }

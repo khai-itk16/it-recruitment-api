@@ -19,12 +19,12 @@ public class JobPostServiceImpl implements JobPostService {
 
     @Override
     public List<JobPostEntity> getAllJobPostByStatusJobPostId(int statusJobPostId) {
-        return this.jobPostRepository.findJobPostEntitiesByStatusEntity(new StatusEntity(statusJobPostId));
+        return this.jobPostRepository.findJobPostEntitiesByStatusEntityOrderByCreatePostTimeDesc(new StatusEntity(statusJobPostId));
     }
 
     @Override
     public List<JobPostEntity> getAllJobPostByEmployerIdAndStatusJobPostId(int accountId, int statusJobPostId) {
-        return this.jobPostRepository.findJobPostEntitiesByEmployerResumeEntityAndStatusEntity(
+        return this.jobPostRepository.findJobPostEntitiesByEmployerResumeEntityAndStatusEntityOrderByCreatePostTimeDesc(
                 new EmployerResumeEntity(accountId), new StatusEntity(statusJobPostId)
         );
     }

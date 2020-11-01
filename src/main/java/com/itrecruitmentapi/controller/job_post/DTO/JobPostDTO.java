@@ -10,7 +10,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.Date;
 
 @AllArgsConstructor

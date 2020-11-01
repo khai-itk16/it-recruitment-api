@@ -18,7 +18,7 @@ public class JobPostController {
     private final JobPostMapper jobPostMapper;
     private final JobPostService jobPostService;
 
-    @GetMapping("/admin/job-post")
+    @GetMapping("/job-post")
     public ResponseEntity<List<JobPostDTO>> getAllJobPostByStatus(@RequestParam(name = "statusJobPostId") int statusJobPostId) {
         return ResponseEntity.status(HttpStatus.OK).body(
             this.jobPostMapper.toJobPostDTOs(
@@ -27,7 +27,7 @@ public class JobPostController {
         );
     }
 
-    @GetMapping("/job-post")
+    @GetMapping("/employer/job-post")
     public ResponseEntity<List<JobPostDTO>> getAllJobPostByEmployerAndStatus(
             @RequestParam(name = "accountId") int accountId,
             @RequestParam(name = "statusJobPostId") int statusJobPostId) {

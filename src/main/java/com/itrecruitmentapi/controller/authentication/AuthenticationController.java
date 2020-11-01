@@ -57,8 +57,6 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<AccountDTO> register(@RequestBody @Validated RegisterDTO registerDTO) {
-        System.out.println("========register======");
-        System.out.println(registerDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 this.accountMapper.toAccountDTO(this.accountService.addNewAccount(
                         this.authenticationMapper.toAccountEntity(registerDTO))));

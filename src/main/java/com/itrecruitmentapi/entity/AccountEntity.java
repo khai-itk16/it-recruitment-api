@@ -1,5 +1,6 @@
 package com.itrecruitmentapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.itrecruitmentapi.shared.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

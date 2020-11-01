@@ -10,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface JobPostRepository extends JpaRepository<JobPostEntity, Integer> {
-    List<JobPostEntity> findJobPostEntitiesByStatusEntity(StatusEntity statusEntity);
-    List<JobPostEntity> findJobPostEntitiesByEmployerResumeEntityAndStatusEntity(EmployerResumeEntity employerResumeEntity, StatusEntity statusEntity);
+    List<JobPostEntity> findJobPostEntitiesByStatusEntityOrderByCreatePostTimeDesc(StatusEntity statusEntity);
+    List<JobPostEntity> findJobPostEntitiesByEmployerResumeEntityAndStatusEntityOrderByCreatePostTimeDesc(EmployerResumeEntity employerResumeEntity, StatusEntity statusEntity);
 }

@@ -12,6 +12,7 @@ import java.util.List;
 public interface JobPostMapper {
     @Mapping(source = "jobPostDTO.employerResumeDTO", target = "employerResumeEntity")
     JobPostEntity toJobPostEntity(JobPostDTO jobPostDTO);
+    @Mapping(source = "jobPostEntity.employerResumeEntity", target = "employerResumeDTO")
     JobPostDTO toJobPostDTO (JobPostEntity jobPostEntity);
     List<JobPostDTO> toJobPostDTOs(List<JobPostEntity> jobPostEntities);
 }
