@@ -20,7 +20,7 @@ public class JobApplyEntity implements Serializable {
     private Integer jobApplyId;
 
     @OneToOne()
-    @JoinColumn(name = "satus_id")
+    @JoinColumn(name = "status_id")
     private StatusEntity statusEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -2,6 +2,8 @@ package com.itrecruitmentapi.controller.account;
 
 
 import com.itrecruitmentapi.controller.account.DTO.AccountDTO;
+import com.itrecruitmentapi.controller.account.DTO.PasswordDTO;
+import com.itrecruitmentapi.entity.AccountEntity;
 import com.itrecruitmentapi.service.AccountService;
 import com.itrecruitmentapi.shared.ResponseMessage;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +35,12 @@ public class AccountController {
     public ResponseEntity<AccountDTO> editAccount(@RequestBody @Validated AccountDTO accountDTO) {
         return ResponseEntity.ok(this.accountMapper.toAccountDTO(this.accountService
                 .editAccount(this.accountMapper.toAccountEntity(accountDTO))));
+    }
+
+    @PutMapping("/change-password")
+    public ResponseEntity<ResponseMessage> changePassword(@RequestBody @Validated PasswordDTO passwordDTO) {
+        this.accountService.changePassWord(passwordDTO);
+        return  ResponseEntity.ok(new ResponseMessage("change password success"));
     }
 
 //    @Secured("ROLE_ADMIN")

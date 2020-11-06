@@ -1,11 +1,8 @@
 package com.itrecruitmentapi.controller.job_save;
 
-import com.itrecruitmentapi.controller.account.CandidateMapper;
-import com.itrecruitmentapi.controller.account.DTO.CandidateDTO;
-import com.itrecruitmentapi.controller.job_post.DTO.JobPostDTO;
-import com.itrecruitmentapi.controller.job_post.JobPostMapper;
 import com.itrecruitmentapi.controller.job_save.DTO.JobSaveDTO;
 import com.itrecruitmentapi.entity.CandidateResumeEntity;
+import com.itrecruitmentapi.entity.JobPostEntity;
 import com.itrecruitmentapi.service.JobSaveService;
 import com.itrecruitmentapi.shared.ResponseMessage;
 import lombok.RequiredArgsConstructor;
@@ -33,15 +30,34 @@ public class JobSaveController {
         );
     }
 
+    @GetMapping("/job-save/check")
+    public ResponseEntity<Boolean> checkJobSaveExist(@RequestParam(name = "accountId") int accountId,
+                                                         @RequestParam(name = "jobPostId") int jobPostId) {
+        CandidateResumeEntity candidateResumeEntity = new CandidateResumeEntity(accountId);
+        JobPostEntity jobPostEntity = new JobPostEntity(jobPostId);
+        return ResponseEntity.status(HttpStatus.OK).body(
+               this.jobSaveService.checkJobSaveExist(candidateResumeEntity, jobPostEntity)
+        );
+    }
+
     @PostMapping("/job-save")
     public ResponseEntity<ResponseMessage> addJobSave(@RequestBody JobSaveDTO jobSaveDTO) {
         this.jobSaveService.addJobSave(this.jobSaveMapper.toJobSaveEntity(jobSaveDTO));
         return ResponseEntity.ok(new ResponseMessage("job has saved"));
     }
 
+    @DeleteMapping("/job-save/{id}")
+    public ResponseEntity<ResponseMessage> deleteJobSaveById(@PathVariable int id) {
+        this.jobSaveService.deleteJobSaveById(id);
+        return ResponseEntity.ok(new ResponseMessage("delete success job save with id: " + id));
+    }
+
     @DeleteMapping("/job-save")
-    public ResponseEntity<ResponseMessage> deleteJobSave(@RequestParam(name = "jobSaveId") int jobSaveId) {
-        this.jobSaveService.deleteJobSave(jobSaveId);
-        return ResponseEntity.ok(new ResponseMessage("delete success job save with id: " + jobSaveId));
+    public ResponseEntity<ResponseMessage> deleteJobSave(@RequestParam(name = "accountId") int accountId,
+                                                         @RequestParam(name = "jobPostId") int jobPostId) {
+        CandidateResumeEntity candidateResumeEntity = new CandidateResumeEntity(accountId);
+        JobPostEntity jobPostEntity = new JobPostEntity(jobPostId);
+        this.jobSaveService.deleteJobSave(candidateResumeEntity, jobPostEntity);
+        return ResponseEntity.ok(new ResponseMessage("delete success job save"));
     }
 }

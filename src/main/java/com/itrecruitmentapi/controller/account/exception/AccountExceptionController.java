@@ -23,6 +23,11 @@ public class AccountExceptionController extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = AccountIsNotExistsException.class)
     public ResponseEntity<Object> exception(AccountIsNotExistsException exception) {
-        return ResponseError.sendResponseError(new ApiError(HttpStatus.BAD_GATEWAY, exception));
+        return ResponseError.sendResponseError(new ApiError(HttpStatus.NOT_FOUND, exception));
+    }
+
+    @ExceptionHandler(value = PasswordIsNotMatchException.class)
+    public ResponseEntity<Object> exception(PasswordIsNotMatchException exception) {
+        return ResponseError.sendResponseError(new ApiError(HttpStatus.BAD_REQUEST, exception));
     }
 }

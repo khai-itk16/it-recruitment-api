@@ -20,6 +20,10 @@ import java.util.Date;
 @Entity
 @Table(name = "job_post")
 public class JobPostEntity implements Serializable {
+    public JobPostEntity(int jobPostId) {
+        this.jobPostId = jobPostId;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer jobPostId;

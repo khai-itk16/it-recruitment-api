@@ -1,5 +1,6 @@
 package com.itrecruitmentapi.service;
 
+import com.itrecruitmentapi.controller.account.DTO.PasswordDTO;
 import com.itrecruitmentapi.entity.AccountEntity;
 
 import java.util.List;
@@ -9,6 +10,7 @@ public interface AccountService {
     AccountEntity getAccountById(int id);
     AccountEntity addNewAccount(AccountEntity accountEntity);
     AccountEntity editAccount(AccountEntity accountEntity);
+    void changePassWord(PasswordDTO passwordDTO);
     void deleteAccountById(int id);
     List<AccountEntity> searchAccounts(String keySearch);
     AccountEntity reverseStatusAccountById(int id);

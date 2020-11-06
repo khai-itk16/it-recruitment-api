@@ -1,8 +1,10 @@
 package com.itrecruitmentapi.service.impl;
 
+import com.itrecruitmentapi.controller.account.DTO.PasswordDTO;
 import com.itrecruitmentapi.controller.account.exception.AccountIsExistsException;
 import com.itrecruitmentapi.controller.account.exception.AccountIsNotExistsException;
 import com.itrecruitmentapi.controller.account.exception.AccountNotFoundException;
+import com.itrecruitmentapi.controller.account.exception.PasswordIsNotMatchException;
 import com.itrecruitmentapi.entity.AccountEntity;
 import com.itrecruitmentapi.entity.CandidateResumeEntity;
 import com.itrecruitmentapi.entity.EmployerResumeEntity;
@@ -72,6 +74,17 @@ public class AccountServiceImpl implements AccountService {
         accountEntity = this.holdValueDefault(accountEntityFromDataBase.get(), accountEntity);
         this.accountRepository.save(accountEntity);
         return this.accountRepository.findById(accountEntity.getAccountId()).get();
+    }
+
+    @Override
+    public void changePassWord(PasswordDTO passwordDTO) {
+        AccountEntity accountEntityDB = this.getAccountById(passwordDTO.getAccountId());
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        if(!bCryptPasswordEncoder.matches(passwordDTO.getOldPassword(), accountEntityDB.getPassword())) {
+            throw new PasswordIsNotMatchException();
+        }
+        accountEntityDB.setPassword(bCryptPasswordEncoder.encode(passwordDTO.getNewPassword()));
+        this.accountRepository.save(accountEntityDB);
     }
 
     private AccountEntity holdValueDefault(AccountEntity accountChange, AccountEntity account) {
