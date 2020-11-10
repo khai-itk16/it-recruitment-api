@@ -6,4 +6,7 @@ import java.util.List;
 
 public interface JobPositionService {
     List<JobPositionEntity> getAllJobPositions();
+    JobPositionEntity addJobPosition(JobPositionEntity jobPositionEntity);
+    JobPositionEntity editJobPosition(JobPositionEntity jobPositionEntity);
+    void deleteJobPositionById(int id);
 }

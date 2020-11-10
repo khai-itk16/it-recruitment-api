@@ -51,8 +51,6 @@ public class AccountServiceImpl implements AccountService {
 
         accountEntity.setPassword(new BCryptPasswordEncoder().encode(accountEntity.getPassword()));
         AccountEntity accountEntityDB = this.accountRepository.save(accountEntity);
-        System.out.println(accountEntity.getRoleEntities().size());
-        System.out.println(accountEntity.getRoleEntities().stream().findFirst().get().getRoleName().equals("ROLE_CANDIDATE"));
         if(accountEntity.getRoleEntities().size() == 1
                 && accountEntity.getRoleEntities().stream().findFirst().get().getRoleName().equals("ROLE_CANDIDATE")) {
             this.candidateResumeRepository.save(new CandidateResumeEntity(accountEntityDB.getAccountId()));

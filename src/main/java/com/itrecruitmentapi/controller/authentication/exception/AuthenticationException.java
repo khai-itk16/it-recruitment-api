@@ -12,11 +12,11 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class AuthenticationException extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = UsernameLoginFailedException.class)
     public ResponseEntity<Object> exception(UsernameLoginFailedException exception) {
-        return ResponseError.sendResponseError(new ApiError(HttpStatus.FORBIDDEN, exception));
+        return ResponseError.sendResponseError(new ApiError(HttpStatus.UNAUTHORIZED, exception));
     }
 
     @ExceptionHandler(value = PasswordLoginFailedException.class)
     public ResponseEntity<Object> exception(PasswordLoginFailedException exception) {
-        return ResponseError.sendResponseError(new ApiError(HttpStatus.FORBIDDEN, exception));
+        return ResponseError.sendResponseError(new ApiError(HttpStatus.UNAUTHORIZED, exception));
     }
 }

@@ -1,5 +1,6 @@
 package com.itrecruitmentapi.service.impl;
 
+import com.itrecruitmentapi.controller.job_position.exception.JobPositionIsNotExistException;
 import com.itrecruitmentapi.entity.JobPositionEntity;
 import com.itrecruitmentapi.repository.JobPositionRepository;
 import com.itrecruitmentapi.service.JobPositionService;
@@ -17,5 +18,26 @@ public class JobPositionServiceImpl implements JobPositionService {
     @Override
     public List<JobPositionEntity> getAllJobPositions() {
         return this.jobPositionRepository.findAll();
+    }
+
+    @Override
+    public JobPositionEntity addJobPosition(JobPositionEntity jobPositionEntity) {
+        return this.jobPositionRepository.save(jobPositionEntity);
+    }
+
+    @Override
+    public JobPositionEntity editJobPosition(JobPositionEntity jobPositionEntity) {
+        if(!this.jobPositionRepository.existsById(jobPositionEntity.getJobPositionId())) {
+            throw new JobPositionIsNotExistException(jobPositionEntity.getJobPositionId());
+        }
+        return this.jobPositionRepository.save(jobPositionEntity);
+    }
+
+    @Override
+    public void deleteJobPositionById(int id) {
+        if(!this.jobPositionRepository.existsById(id)) {
+            throw new JobPositionIsNotExistException(id);
+        }
+        this.jobPositionRepository.deleteById(id);
     }
 }
