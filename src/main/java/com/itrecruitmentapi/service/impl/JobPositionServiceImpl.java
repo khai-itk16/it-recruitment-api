@@ -21,6 +21,11 @@ public class JobPositionServiceImpl implements JobPositionService {
     }
 
     @Override
+    public Long countAllJobPositions() {
+        return this.jobPositionRepository.count();
+    }
+
+    @Override
     public JobPositionEntity addJobPosition(JobPositionEntity jobPositionEntity) {
         return this.jobPositionRepository.save(jobPositionEntity);
     }

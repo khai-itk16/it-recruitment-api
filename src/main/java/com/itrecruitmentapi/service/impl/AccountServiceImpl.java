@@ -43,6 +43,11 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public Long countAllAccounts() {
+        return this.accountRepository.count();
+    }
+
+    @Override
     public AccountEntity addNewAccount(AccountEntity accountEntity) {
         Optional<AccountEntity> accountEntityFromDataBase = this.accountRepository.findByUsername(accountEntity.getUsername());
         if (accountEntityFromDataBase.isPresent()) {

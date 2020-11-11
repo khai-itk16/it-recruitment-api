@@ -31,6 +31,11 @@ public class AccountController {
         return  ResponseEntity.ok(this.accountMapper.toAccountDTOs(this.accountService.getAllAccounts()));
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<Long> countAllAccounts() {
+        return ResponseEntity.ok(this.accountService.countAllAccounts());
+    }
+
     @PutMapping()
     public ResponseEntity<AccountDTO> editAccount(@RequestBody @Validated AccountDTO accountDTO) {
         return ResponseEntity.ok(this.accountMapper.toAccountDTO(this.accountService

@@ -12,4 +12,5 @@ import java.util.List;
 public interface JobPostRepository extends JpaRepository<JobPostEntity, Integer> {
     List<JobPostEntity> findJobPostEntitiesByStatusEntityOrderByCreatePostTimeDesc(StatusEntity statusEntity);
     List<JobPostEntity> findJobPostEntitiesByEmployerResumeEntityAndStatusEntityOrderByCreatePostTimeDesc(EmployerResumeEntity employerResumeEntity, StatusEntity statusEntity);
+    Long countAllByStatusEntity(StatusEntity statusEntity);
 }

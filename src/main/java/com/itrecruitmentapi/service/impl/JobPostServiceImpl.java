@@ -23,6 +23,11 @@ public class JobPostServiceImpl implements JobPostService {
     }
 
     @Override
+    public Long countAllJobPostsByStatus(int statusJobPostId) {
+        return this.jobPostRepository.countAllByStatusEntity(new StatusEntity(statusJobPostId));
+    }
+
+    @Override
     public List<JobPostEntity> getAllJobPostByEmployerIdAndStatusJobPostId(int accountId, int statusJobPostId) {
         return this.jobPostRepository.findJobPostEntitiesByEmployerResumeEntityAndStatusEntityOrderByCreatePostTimeDesc(
                 new EmployerResumeEntity(accountId), new StatusEntity(statusJobPostId)
@@ -48,6 +53,17 @@ public class JobPostServiceImpl implements JobPostService {
         if(!this.jobPostRepository.existsById(jobPostEntity.getJobPostId())) {
             throw new JobPostIsNotExistException(jobPostEntity.getJobPostId());
         }
+        return this.jobPostRepository.save(jobPostEntity);
+    }
+
+    @Override
+    public JobPostEntity changeStatusJobPost(int jobPostId, int statusJobPostId) {
+        Optional<JobPostEntity> optionalJobPostEntity = this.jobPostRepository.findById(jobPostId);
+        if(!optionalJobPostEntity.isPresent()) {
+            throw new JobPostIsNotExistException(jobPostId);
+        }
+        JobPostEntity jobPostEntity = optionalJobPostEntity.get();
+        jobPostEntity.setStatusEntity(new StatusEntity(statusJobPostId));
         return this.jobPostRepository.save(jobPostEntity);
     }
 

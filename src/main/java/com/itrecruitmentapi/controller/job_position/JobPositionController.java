@@ -24,6 +24,11 @@ public class JobPositionController {
                 this.jobPositionService.getAllJobPositions()));
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<Long> countAllJobPositions() {
+        return ResponseEntity.ok(this.jobPositionService.countAllJobPositions());
+    }
+
     @PostMapping()
     public ResponseEntity<JobPositionDTO> addJobPosition(@RequestBody @Validated JobPositionDTO jobPositionDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(

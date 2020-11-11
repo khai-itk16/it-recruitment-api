@@ -27,6 +27,11 @@ public class JobPostController {
         );
     }
 
+    @GetMapping("/job-post/count")
+    public ResponseEntity<Long> countAllJobPostsByStatus(@RequestParam("statusJobPostId") int statusJobPostId) {
+        return ResponseEntity.ok(this.jobPostService.countAllJobPostsByStatus(statusJobPostId));
+    }
+
     @GetMapping("/employer/job-post")
     public ResponseEntity<List<JobPostDTO>> getAllJobPostByEmployerAndStatus(
             @RequestParam(name = "accountId") int accountId,
@@ -63,6 +68,13 @@ public class JobPostController {
                 this.jobPostService.editJobPost(this.jobPostMapper.toJobPostEntity(jobPostDTO))
             )
         );
+    }
+
+    @PutMapping("/job-post/{id}")
+    public ResponseEntity<ResponseMessage> changeStatusJobPost(@PathVariable("id") int id,
+                                                  @RequestParam("statusJobPostId") int statusJobPostId) {
+        this.jobPostService.changeStatusJobPost(id, statusJobPostId);
+        return ResponseEntity.ok(new ResponseMessage("change status success job post with id: " + id));
     }
 
     @DeleteMapping("/job-post/{id}")
