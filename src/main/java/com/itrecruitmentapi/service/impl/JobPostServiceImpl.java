@@ -23,6 +23,26 @@ public class JobPostServiceImpl implements JobPostService {
     }
 
     @Override
+    public List<JobPostEntity> searchJobPosts(String keySearch) {
+        return this.jobPostRepository.findJobPostsByKeyword(keySearch);
+    }
+
+    @Override
+    public List<JobPostEntity> searchJobPosts(String keySearch, String provinceId) {
+        return this.jobPostRepository.findJobPostsByKeyword(keySearch, provinceId);
+    }
+
+    @Override
+    public List<JobPostEntity> searchJobPosts(String keySearch, int positionId) {
+        return this.jobPostRepository.findJobPostsByKeyword(keySearch, positionId);
+    }
+
+    @Override
+    public List<JobPostEntity> searchJobPosts(String keySearch, String provinceId, int positionId) {
+        return this.jobPostRepository.findJobPostsByKeyword(keySearch, provinceId, positionId);
+    }
+
+    @Override
     public Long countAllJobPostsByStatus(int statusJobPostId) {
         return this.jobPostRepository.countAllByStatusEntity(new StatusEntity(statusJobPostId));
     }

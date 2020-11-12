@@ -52,6 +52,29 @@ public class JobPostController {
         );
     }
 
+    @GetMapping("/job-post/search")
+    public ResponseEntity<List<JobPostDTO>> searchJobPosts(@RequestParam(name = "keySearch") String keySearch,
+                                                           @RequestParam(name = "provinceId", required = false) String provinceId,
+                                                           @RequestParam(name = "positionId", required = false) Integer positionId) {
+
+        if(positionId != null && provinceId != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(this.jobPostMapper.toJobPostDTOs(
+                            this.jobPostService.searchJobPosts(keySearch, provinceId, positionId)));
+        }
+
+        if (positionId == null && provinceId != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(this.jobPostMapper.toJobPostDTOs(
+                    this.jobPostService.searchJobPosts(keySearch, provinceId)));
+        }
+
+        if (positionId != null && provinceId == null) {
+            return ResponseEntity.status(HttpStatus.OK).body(this.jobPostMapper.toJobPostDTOs(
+                    this.jobPostService.searchJobPosts(keySearch, positionId)));
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(this.jobPostMapper.toJobPostDTOs(
+                this.jobPostService.searchJobPosts(keySearch)));
+    }
+
     @PostMapping("/job-post")
     public ResponseEntity<JobPostDTO> addJobPost(@RequestBody @Validated JobPostDTO jobPostDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(
