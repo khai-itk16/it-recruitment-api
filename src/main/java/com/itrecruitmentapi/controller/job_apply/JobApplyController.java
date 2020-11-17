@@ -5,14 +5,17 @@ import com.itrecruitmentapi.controller.account.DTO.CandidateDTO;
 import com.itrecruitmentapi.controller.job_apply.DTO.JobApplyDTO;
 import com.itrecruitmentapi.controller.job_post.DTO.JobPostDTO;
 import com.itrecruitmentapi.controller.job_post.JobPostMapper;
-import com.itrecruitmentapi.entity.CandidateResumeEntity;
-import com.itrecruitmentapi.entity.JobPostEntity;
+import com.itrecruitmentapi.entity.*;
 import com.itrecruitmentapi.service.JobApplyService;
 import com.itrecruitmentapi.shared.ResponseMessage;
+import com.itrecruitmentapi.shared.model.ApplyFilter;
+import com.itrecruitmentapi.shared.model.CandidateFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -24,6 +27,7 @@ public class JobApplyController {
     private final CandidateMapper candidateMapper;
     private final JobPostMapper jobPostMapper;
     private final JobApplyService jobApplyService;
+    private final RestTemplate restTemplate;
 
     @GetMapping("/candidate/{accountId}/job-apply")
     public ResponseEntity<List<JobPostDTO>> getAllJobApplyByAccount(@PathVariable("accountId") int accountId,
@@ -51,6 +55,43 @@ public class JobApplyController {
                 this.candidateMapper.toCandidateDTOs(
                         this.jobApplyService.getAllCandidateByJobPost(jobPostId, statusId)
                 )
+        );
+    }
+
+    @GetMapping("/job-post/{jobPostId}/job-apply/filter")
+    public ResponseEntity<Object> getAllJobApplyFilterCandidate(@PathVariable("jobPostId") int jobPostId) {
+        String URL_FILTER_CV = "http://localhost:5000/data";
+        List<JobApplyEntity> jobApplyEntities = this.jobApplyService.filterJobApplyCandidateStep1(jobPostId);
+        ApplyFilter applyFilter = new ApplyFilter();
+        String jobRequire = jobApplyEntities.get(0).getJobPostEntity().getJobRequire() + jobApplyEntities.get(0).getJobPostEntity().getJobDescription();
+        applyFilter.setJobPostId(jobPostId);
+        applyFilter.setJobRequire(jobRequire);
+        for (JobApplyEntity jobApplyEntity : jobApplyEntities) {
+            String skillAndExperience = "";
+            List<SkillEntity> skillEntities = (List<SkillEntity>) jobApplyEntity.getCandidateResumeEntity().getSkillEntities();
+            List<ExperienceEntity> experienceEntities = (List<ExperienceEntity>) jobApplyEntity.getCandidateResumeEntity().getExperienceEntities();
+            for (SkillEntity skillEntity : skillEntities) {
+                skillAndExperience += (skillEntity.getSkillName() + " " + skillEntity.getDescription()) + " ";
+            }
+
+            for (ExperienceEntity experienceEntity : experienceEntities) {
+                skillAndExperience += (experienceEntity.getExperienceName() + " " + experienceEntity.getDescription()) + " ";
+            }
+            applyFilter.getCandidateFilters().add(new CandidateFilter(jobApplyEntity.getCandidateResumeEntity().getAccountId(), skillAndExperience));
+        }
+//        HttpEntity<List<CandidateDTO>> requestBody = new HttpEntity<>(applyFilter);
+        return ResponseEntity.status(HttpStatus.OK).body(
+//                this.restTemplate.postForObject(URL_FILTER_CV, requestBody, List.class)
+                applyFilter
+        );
+    }
+
+    @GetMapping("/job-post/{jobPostId}/job-apply/filter-step-1")
+    public ResponseEntity<List<JobApplyDTO>> filterJobApplyCandidateStep1(@PathVariable("jobPostId") int jobPostId) {
+        return ResponseEntity.status(HttpStatus.OK).body(
+             this.jobApplyMapper.toJobApplyDTOs(
+                     this.jobApplyService.filterJobApplyCandidateStep1(jobPostId)
+             )
         );
     }
 

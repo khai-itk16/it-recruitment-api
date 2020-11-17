@@ -15,6 +15,7 @@ public interface JobApplyMapper {
     @Mapping(source = "jobApplyDTO.jobPostDTO", target = "jobPostEntity")
     JobApplyEntity toJobApplyEntity(JobApplyDTO jobApplyDTO);
 
+    @Mapping(source = "jobApplyEntity.candidateResumeEntity", target = "candidateDTO")
     JobApplyDTO toJobApplyDTO(JobApplyEntity jobApplyEntity);
     List<JobApplyDTO> toJobApplyDTOs(List<JobApplyEntity> jobApplyEntities);
 }

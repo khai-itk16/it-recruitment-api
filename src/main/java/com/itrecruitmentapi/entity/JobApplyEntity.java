@@ -19,6 +19,8 @@ public class JobApplyEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer jobApplyId;
 
+    private Double matchPercent;
+
     @OneToOne()
     @JoinColumn(name = "status_id")
     private StatusEntity statusEntity;

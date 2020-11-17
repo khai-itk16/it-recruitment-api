@@ -15,6 +15,8 @@ import lombok.NoArgsConstructor;
 public class JobApplyDTO {
     private Integer jobApplyId;
 
+    private Double matchPercent;
+
     private StatusEntity statusEntity;
 
     private CandidateDTO candidateDTO;

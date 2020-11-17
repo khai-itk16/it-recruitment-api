@@ -4,6 +4,7 @@ import com.itrecruitmentapi.controller.job_apply.exception.JobApplyIsNotExistExc
 import com.itrecruitmentapi.entity.CandidateResumeEntity;
 import com.itrecruitmentapi.entity.JobApplyEntity;
 import com.itrecruitmentapi.entity.JobPostEntity;
+import com.itrecruitmentapi.entity.StatusEntity;
 import com.itrecruitmentapi.repository.CandidateResumeRepository;
 import com.itrecruitmentapi.repository.JobApplyRepository;
 import com.itrecruitmentapi.repository.JobPostRepository;
@@ -12,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -20,6 +22,43 @@ public class JobApplyServiceImpl implements JobApplyService {
     private final JobApplyRepository jobApplyRepository;
     private final CandidateResumeRepository candidateResumeRepository;
     private final JobPostRepository jobPostRepository;
+
+    @Override
+    public List<JobApplyEntity> filterJobApplyCandidateStep1(int jobPostId) {
+        List<JobApplyEntity> jobApplyEntities = this.getAllJobApplyByJobPostAndStatus(jobPostId, 5);
+        Iterator itr = jobApplyEntities.iterator();
+        while (itr.hasNext()) {
+            JobApplyEntity jobApplyEntity = (JobApplyEntity)itr.next();
+            JobPostEntity jobPostEntity = jobApplyEntity.getJobPostEntity();
+            CandidateResumeEntity candidateResumeEntity = jobApplyEntity.getCandidateResumeEntity();
+            if(jobPostEntity.getNumYearExperience() > candidateResumeEntity.getNumYearExperience()) {
+                jobApplyEntity.setStatusEntity(new StatusEntity(7));
+                this.jobApplyRepository.save(jobApplyEntity);
+                itr.remove();
+                continue;
+            }
+            if(jobPostEntity.getJobTypeEntity().getJobTypeId() != candidateResumeEntity.getJobTypeEntity().getJobTypeId()) {
+                jobApplyEntity.setStatusEntity(new StatusEntity(7));
+                this.jobApplyRepository.save(jobApplyEntity);
+                itr.remove();
+                continue;
+            }
+            if(jobPostEntity.getJobPositionEntity().getJobPositionId() != candidateResumeEntity.getJobPositionEntity().getJobPositionId()) {
+                jobApplyEntity.setStatusEntity(new StatusEntity(7));
+                this.jobApplyRepository.save(jobApplyEntity);
+                itr.remove();
+                continue;
+            }
+        }
+
+        return jobApplyEntities;
+    }
+
+    @Override
+    public List<JobApplyEntity> getAllJobApplyByJobPostAndStatus(int jobPostId, int statusId) {
+        return this.jobApplyRepository.findJobApplyEntitiesByJobPostEntityAndStatusEntity(
+                new JobPostEntity(jobPostId), new StatusEntity(statusId));
+    }
 
     @Override
     public List<CandidateResumeEntity> getAllCandidateByJobPost(int jobPostId, int statusId) {

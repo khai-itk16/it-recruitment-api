@@ -3,6 +3,7 @@ package com.itrecruitmentapi.repository;
 import com.itrecruitmentapi.entity.CandidateResumeEntity;
 import com.itrecruitmentapi.entity.JobApplyEntity;
 import com.itrecruitmentapi.entity.JobPostEntity;
+import com.itrecruitmentapi.entity.StatusEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -31,4 +32,6 @@ public interface JobApplyRepository extends JpaRepository<JobApplyEntity, Intege
     List<Integer> findCandidateResumeIdsByJobPostId(@Param("jobPostId") int jobPostId, @Param("statusId") int statusId);
 
     Boolean existsJobApplyEntityByCandidateResumeEntityAndJobPostEntity(CandidateResumeEntity candidateResumeEntity, JobPostEntity jobPostEntity);
+
+    List<JobApplyEntity> findJobApplyEntitiesByJobPostEntityAndStatusEntity(JobPostEntity jobPostEntity, StatusEntity statusEntity);
 }

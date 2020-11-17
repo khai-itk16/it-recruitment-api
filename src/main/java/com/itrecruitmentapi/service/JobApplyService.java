@@ -7,6 +7,8 @@ import com.itrecruitmentapi.entity.JobPostEntity;
 import java.util.List;
 
 public interface JobApplyService {
+    List<JobApplyEntity> filterJobApplyCandidateStep1(int jobPostId);
+    List<JobApplyEntity> getAllJobApplyByJobPostAndStatus(int jobPostId, int statusId);
     List<CandidateResumeEntity> getAllCandidateByJobPost(int jobPostId, int statusId);
     List<JobPostEntity> getAllJobPostByCandidate(int accountId, int statusId);
     Boolean checkIsApplyByCandidateAndJobPost(CandidateResumeEntity candidateResumeEntity, JobPostEntity jobPostEntity);
