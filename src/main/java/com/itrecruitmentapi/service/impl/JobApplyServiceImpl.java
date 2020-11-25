@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +23,11 @@ public class JobApplyServiceImpl implements JobApplyService {
     private final JobApplyRepository jobApplyRepository;
     private final CandidateResumeRepository candidateResumeRepository;
     private final JobPostRepository jobPostRepository;
+
+    @Override
+    public List<JobApplyEntity> updateAllJobAppliesAfterFilter(List<JobApplyEntity> jobApplyEntities) {
+        return this.jobApplyRepository.saveAll(jobApplyEntities);
+    }
 
     @Override
     public List<JobApplyEntity> filterJobApplyCandidateStep1(int jobPostId) {
@@ -61,15 +67,11 @@ public class JobApplyServiceImpl implements JobApplyService {
     }
 
     @Override
-    public List<CandidateResumeEntity> getAllCandidateByJobPost(int jobPostId, int statusId) {
-        List<Integer> candidateResumeIds = this.jobApplyRepository.findCandidateResumeIdsByJobPostId(jobPostId, statusId);
-        List<CandidateResumeEntity> candidateResumeEntities = new ArrayList<>();
-        candidateResumeIds.stream().forEach(accountId -> {
-            CandidateResumeEntity candidateResumeEntity = this.candidateResumeRepository.findById(accountId).get();
-            candidateResumeEntities.add(candidateResumeEntity);
-        });
+    public List<JobApplyEntity> getAllCandidateByJobPost(int jobPostId, int statusId) {
 
-        return candidateResumeEntities;
+        return this.jobApplyRepository
+                .findJobApplyEntitiesByJobPostEntityAndStatusEntityOrderByMatchPercentDesc(
+                        new JobPostEntity(jobPostId), new StatusEntity(statusId));
     }
 
     @Override
@@ -97,6 +99,17 @@ public class JobApplyServiceImpl implements JobApplyService {
     @Override
     public JobApplyEntity editJobApply(JobApplyEntity jobApplyEntity) {
         return this.jobApplyRepository.save(jobApplyEntity);
+    }
+
+    @Override
+    public void changeStatusJobApply(int jobApplyId, int statusId) {
+        Optional<JobApplyEntity> optionalJobApplyEntity = this.jobApplyRepository.findById(jobApplyId);
+        if(!optionalJobApplyEntity.isPresent()) {
+            throw new JobApplyIsNotExistException(jobApplyId);
+        }
+        JobApplyEntity jobApplyEntityDB = optionalJobApplyEntity.get();
+        jobApplyEntityDB.setStatusEntity(new StatusEntity(statusId));
+        this.jobApplyRepository.save(jobApplyEntityDB);
     }
 
     @Override

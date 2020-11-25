@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class CandidateFilter {
     private Integer accountId;
     private String skillAndExperience;
+    private Double matchPercent;
 }

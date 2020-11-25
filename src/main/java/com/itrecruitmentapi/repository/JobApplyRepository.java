@@ -22,14 +22,7 @@ public interface JobApplyRepository extends JpaRepository<JobApplyEntity, Intege
     )
     List<Integer> findJobPostIdsByCandidateResumeId(@Param("accountId") int accountId, @Param("statusId") int statusId);
 
-    @Query(
-            value = "SELECT account_id FROM job_apply\n" +
-                    "where job_post_id = :jobPostId\n" +
-                    "and status_id = :statusId"
-            ,
-            nativeQuery = true
-    )
-    List<Integer> findCandidateResumeIdsByJobPostId(@Param("jobPostId") int jobPostId, @Param("statusId") int statusId);
+    List<JobApplyEntity> findJobApplyEntitiesByJobPostEntityAndStatusEntityOrderByMatchPercentDesc(JobPostEntity jobPostEntity, StatusEntity statusEntity);
 
     Boolean existsJobApplyEntityByCandidateResumeEntityAndJobPostEntity(CandidateResumeEntity candidateResumeEntity, JobPostEntity jobPostEntity);
 

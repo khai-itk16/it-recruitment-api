@@ -40,9 +40,6 @@ public class ImageController extends ResponseEntityExceptionHandler {
         uploadFiles(@RequestParam("files") MultipartFile[] files,
                     @RequestParam("jsonImageDTOs") String jsonImageDTOs) {
 
-        System.out.println("=======jsonImageDTOs===========");
-        System.out.println(jsonImageDTOs);
-
         ObjectMapper mapper = new ObjectMapper();
         List<ImageDTO> imageDTOs;
 
