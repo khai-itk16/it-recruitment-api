@@ -125,6 +125,6 @@ public class JobApplyController {
     @DeleteMapping("/job-apply/{id}")
     public ResponseEntity<ResponseMessage> deleteJobApply(@PathVariable("id") int id) {
         this.jobApplyService.deleteJobApply(id);
-        return ResponseEntity.ok(new ResponseMessage("delete success job save with id: " + id));
+        return ResponseEntity.ok(new ResponseMessage("delete success job apply with id: " + id));
     }
 }

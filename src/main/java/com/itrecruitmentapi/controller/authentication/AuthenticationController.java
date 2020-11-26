@@ -4,6 +4,7 @@ package com.itrecruitmentapi.controller.authentication;
 import com.itrecruitmentapi.config.TokenProvider;
 import com.itrecruitmentapi.controller.account.AccountMapper;
 import com.itrecruitmentapi.controller.account.DTO.AccountDTO;
+import com.itrecruitmentapi.controller.account.exception.AccountIsLockedException;
 import com.itrecruitmentapi.controller.authentication.DTO.AuthTokenDTO;
 import com.itrecruitmentapi.controller.authentication.DTO.LoginDTO;
 import com.itrecruitmentapi.controller.authentication.DTO.RegisterDTO;
@@ -49,7 +50,11 @@ public class AuthenticationController {
                 final String token = jwtTokenUtil.generateToken(authentication);
                 return ResponseEntity.ok(new AuthTokenDTO(token));
             } catch (Exception e) {
-                throw new PasswordLoginFailedException();
+                if (e instanceof UsernameNotFoundException) {
+                    throw new PasswordLoginFailedException();
+                } else {
+                    throw new AccountIsLockedException();
+                }
             }
         }
         throw new UsernameNotFoundException("Login failed");

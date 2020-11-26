@@ -49,6 +49,9 @@ public class JobPostServiceImpl implements JobPostService {
 
     @Override
     public List<JobPostEntity> getAllJobPostByEmployerIdAndStatusJobPostId(int accountId, int statusJobPostId) {
+        if(statusJobPostId == 4) {
+            this.jobPostRepository.updateJobPostsExpire();
+        }
         return this.jobPostRepository.findJobPostEntitiesByEmployerResumeEntityAndStatusEntityOrderByCreatePostTimeDesc(
                 new EmployerResumeEntity(accountId), new StatusEntity(statusJobPostId)
         );

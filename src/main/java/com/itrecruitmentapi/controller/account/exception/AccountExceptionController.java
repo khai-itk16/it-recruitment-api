@@ -5,6 +5,7 @@ import com.itrecruitmentapi.shared.ResponseError;
 import com.itrecruitmentapi.shared.model.ApiError;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -29,5 +30,10 @@ public class AccountExceptionController extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = PasswordIsNotMatchException.class)
     public ResponseEntity<Object> exception(PasswordIsNotMatchException exception) {
         return ResponseError.sendResponseError(new ApiError(HttpStatus.BAD_REQUEST, exception));
+    }
+
+    @ExceptionHandler(value = AccountIsLockedException.class)
+    public ResponseEntity<Object> exception(AccountIsLockedException exception) {
+        return ResponseError.sendResponseError(new ApiError(HttpStatus.FORBIDDEN, exception));
     }
 }

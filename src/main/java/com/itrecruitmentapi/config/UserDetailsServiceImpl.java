@@ -1,9 +1,13 @@
 package com.itrecruitmentapi.config;
 
+import com.itrecruitmentapi.controller.account.exception.AccountIsLockedException;
 import com.itrecruitmentapi.entity.AccountEntity;
 import com.itrecruitmentapi.entity.RoleEntity;
 import com.itrecruitmentapi.repository.AccountRepository;
+import com.itrecruitmentapi.shared.enums.Status;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,6 +31,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (userOpt.isPresent()) {
 
             AccountEntity accountEntity = userOpt.get();
+
+            if(accountEntity.getStatus() == Status.LOCK) {
+                throw new AccountIsLockedException();
+            }
 
             Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 

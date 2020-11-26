@@ -8,6 +8,7 @@ import com.itrecruitmentapi.service.AccountService;
 import com.itrecruitmentapi.shared.ResponseMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +26,8 @@ public class AccountController {
     public ResponseEntity<AccountDTO> getAccountById(@PathVariable("id") int id) {
         return ResponseEntity.ok(this.accountMapper.toAccountDTO(this.accountService.getAccountById(id)));
     }
-//    @Secured("ROLE_ADMIN")
+
+    @Secured("ROLE_ADMIN")
     @GetMapping()
     public ResponseEntity<List<AccountDTO>> getAllAccounts() {
         return  ResponseEntity.ok(this.accountMapper.toAccountDTOs(this.accountService.getAllAccounts()));
@@ -48,14 +50,14 @@ public class AccountController {
         return  ResponseEntity.ok(new ResponseMessage("change password success"));
     }
 
-//    @Secured("ROLE_ADMIN")
+    @Secured("ROLE_ADMIN")
     @DeleteMapping("/{id}")
     public ResponseEntity<ResponseMessage> deleteAccount(@PathVariable("id") int id) {
         this.accountService.deleteAccountById(id);
         return  ResponseEntity.ok(new ResponseMessage("delete success account with id: " + id));
     }
 
-//    @Secured("ROLE_ADMIN")
+    @Secured("ROLE_ADMIN")
     @PutMapping("/{id}/status")
     public ResponseEntity<ResponseMessage> changeStatus(@PathVariable("id") int id) {
         this.accountService.reverseStatusAccountById(id);
