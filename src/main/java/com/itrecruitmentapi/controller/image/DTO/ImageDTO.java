@@ -20,8 +20,7 @@ public class ImageDTO {
 
     private Integer imageId;
 
-    @Length(max = 50)
-    private String imageName;
+    private String imageUrl;
 
     private boolean isAvatar;
 
